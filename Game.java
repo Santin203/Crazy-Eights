@@ -10,13 +10,13 @@ public class Game {
     private String gameName;
     private boolean reverseDirection;
     
-    public Game(String gameName, List<String> playerNames) {
+    public Game(String gameName, List<String> playerNames, Deck drawPile) {
         this.gameName = gameName;
         this.players = new ArrayList<>();
         for (String name : playerNames) {
             players.add(new Player(name));
         }
-        this.drawPile = new Deck();
+        this.drawPile = drawPile;
         this.discardPile = new Deck(new ArrayList<>());
         this.currentPlayerIndex = 0;
         this.gameOver = false;

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -180,7 +181,7 @@ public class Main {
                 }
                 
                 // Create and initialize the game
-                Game game = new Game(gameName, users);
+                Game game = new Game(gameName, users, new Deck());
                 game.initializeGame();
                 
                 // Save game state to files
@@ -466,7 +467,7 @@ public class Main {
             }
             
             // Create game
-            Game game = new Game(gameName, users);
+            Game game = new Game(gameName, users, new Deck(new ArrayList<>()));
             
             // Load player hands and states
             for (String user : users) {
@@ -490,7 +491,6 @@ public class Main {
             // Load draw pile
             List<String> drawCodes = GameFileManager.loadDrawPile(gameName);
             Deck drawPile = Deck.fromCardCodes(drawCodes);
-            game.getDrawPile().getCards().clear();
             for (Card card : drawPile.getCards()) {
                 game.getDrawPile().addCard(card);
             }
