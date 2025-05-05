@@ -549,7 +549,7 @@ public class Main {
                 GameFileManager.savePlayerDrawnState(gameName, player.getName(), player.hasDrawnThisTurn());
             }
             
-            // Save draw pile
+            // Save draw pile - only save the current state, not adding new cards
             GameFileManager.saveDrawPile(gameName, game.getDrawPile().toCardCodes());
             
             // Save discard pile

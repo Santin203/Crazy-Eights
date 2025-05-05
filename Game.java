@@ -159,14 +159,8 @@ public class Game {
     private boolean checkGameOver() {
         Player currentPlayer = getCurrentPlayer();
         
-        // Game is over if a player has no cards left
-        if (currentPlayer.hasWon()) {
-            gameOver = true;
-            return true;
-        }
-        
-        // Game is over if the draw pile is empty
-        if (drawPile.isEmpty()) {
+        // Game is over if a player has no cards left or if the draw pile is empty
+        if (Rules.isGameOver(currentPlayer, drawPile)) {
             gameOver = true;
             return true;
         }
