@@ -1,0 +1,3 @@
+admin,NvAoWAuwLMgnKpoCD0IA40bidq5mTkXugHRVdOL1q4A=
+player1,NvAoWAuwLMgnKpoCD0IA40bidq5mTkXugHRVdOL1q4A=
+player2,NvAoWAuwLMgnKpoCD0IA40bidq5mTkXugHRVdOL1q4A=
