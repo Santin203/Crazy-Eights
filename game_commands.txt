@@ -1,0 +1,24 @@
+# Crazy Eights Game Commands
+
+Initialize a new game:
+    java Main --init --game my_game
+
+Add players:
+    java Main --add-user player1 --game my_game
+    java Main --add-user player2 --game my_game
+
+Remove players:
+    java Main --remove-user player2 --game my_game
+
+Start the game:
+    java Main --start --game my_game
+
+View your cards:
+    java Main --cards player1 --user player1 --game my_game
+
+View turn order:
+    java Main --order --user juan --game bluegame
+
+Play a card:
+    java Main --play 7H --user player1 --game my_game
+
