@@ -7,6 +7,10 @@ import java.util.Base64;
 import java.util.Scanner;
 
 public class AuthenticationManager {
+
+    /*
+     * Prompt: Hash the password and encode it in Base64.
+     */
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA3-256");
@@ -17,6 +21,9 @@ public class AuthenticationManager {
         }
     }
     
+    /*
+     * Prompt: Authenticate the admin using the hashed password
+     */
     public static boolean authenticateAdmin(String gameName, String password) {
         try {
             String storedHash = GameFileManager.getHashedPassword(gameName, "admin");
