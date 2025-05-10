@@ -400,12 +400,16 @@ public class CommandHandler {
                 System.err.println("Cannot pass. You must draw a card first or play a valid card if possible.");
                 return;
             }
-            
-
-            saveGameState(game);
+                saveGameState(game);
             
             System.out.println("Turn passed.");
-            System.out.println("Next player: " + game.getCurrentPlayer().getName());
+            
+            if (game.isGameOver()) {
+                Player winner = game.getWinner();
+                System.out.println("Game over! Winner: " + winner.getName());
+            } else {
+                System.out.println("Next player: " + game.getCurrentPlayer().getName());
+            }
             
         } catch (IOException e) {
             System.err.println("Error passing turn: " + e.getMessage());
