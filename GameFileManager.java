@@ -15,22 +15,19 @@ public class GameFileManager {
     private static final String DISCARD_FILE = "discard.txt";
     private static final String DRAWN_STATE_SUFFIX = "_drawn.txt";
     
-    // Create a new game directory
     public static boolean createGameDirectory(String gameName) {
         File gameDir = new File(gameName);
         if (gameDir.exists()) {
-            return false; // Game already exists
+            return false;
         }
         return gameDir.mkdir();
     }
     
-    // Check if a game exists
     public static boolean gameExists(String gameName) {
         File gameDir = new File(gameName);
         return gameDir.exists() && gameDir.isDirectory();
     }
     
-    // Save admin credentials to users.txt
     public static void saveAdminCredentials(String gameName, String hashedPassword) throws IOException {
         String usersFilePath = gameName + File.separator + USERS_FILE;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFilePath))) {
@@ -39,9 +36,8 @@ public class GameFileManager {
         }
     }
     
-    // Add a user to users.txt
     public static void addUser(String gameName, String username, String hashedPassword) throws IOException {
-        // Check if username is "admin" which is reserved
+
         if (username.equalsIgnoreCase("admin")) {
             throw new IOException("Username 'admin' is reserved and cannot be added manually.");
         }
@@ -53,10 +49,9 @@ public class GameFileManager {
         }
     }
     
-    // Remove a user from users.txt
     public static boolean removeUser(String gameName, String username) throws IOException {
         if (username.equals("admin")) {
-            return false; // Cannot remove admin
+            return false;
         }
         
         String usersFilePath = gameName + File.separator + USERS_FILE;
@@ -73,8 +68,7 @@ public class GameFileManager {
                     found = true;
                 }
             }
-            
-            // Also remove user's hand file if it exists
+
             File handFile = new File(gameName + File.separator + username + ".txt");
             if (handFile.exists()) {
                 handFile.delete();
@@ -83,8 +77,7 @@ public class GameFileManager {
             return found;
         }
     }
-    
-    // Get all users in a game
+
     public static List<String> getUsers(String gameName) throws IOException {
         String usersFilePath = gameName + File.separator + USERS_FILE;
         List<String> users = new ArrayList<>();
@@ -102,7 +95,7 @@ public class GameFileManager {
         return users;
     }
     
-    // Get the hashed password for a user
+
     public static String getHashedPassword(String gameName, String username) throws IOException {
         String usersFilePath = gameName + File.separator + USERS_FILE;
         
@@ -116,10 +109,9 @@ public class GameFileManager {
             }
         }
         
-        return null; // User not found
+        return null;
     }
     
-    // Save player's hand to their file
     public static void savePlayerHand(String gameName, String username, List<String> cardCodes) throws IOException {
         String playerFilePath = gameName + File.separator + username + ".txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(playerFilePath))) {
@@ -130,15 +122,15 @@ public class GameFileManager {
         }
     }
     
-    // Load player's hand from their file
     public static List<String> loadPlayerHand(String gameName, String username) throws IOException {
         String playerFilePath = gameName + File.separator + username + ".txt";
         List<String> cardCodes = new ArrayList<>();
         
         File playerFile = new File(playerFilePath);
         if (!playerFile.exists()) {
-            return cardCodes; // Empty hand if file doesn't exist
+            return cardCodes;
         }
+
         
         try (BufferedReader reader = new BufferedReader(new FileReader(playerFilePath))) {
             String line;
@@ -153,7 +145,7 @@ public class GameFileManager {
         return cardCodes;
     }
     
-    // Save draw pile to draw.txt
+
     public static void saveDrawPile(String gameName, List<String> cardCodes) throws IOException {
         String drawFilePath = gameName + File.separator + DRAW_FILE;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(drawFilePath))) {
@@ -164,14 +156,13 @@ public class GameFileManager {
         }
     }
     
-    // Load draw pile from draw.txt
     public static List<String> loadDrawPile(String gameName) throws IOException {
         String drawFilePath = gameName + File.separator + DRAW_FILE;
         List<String> cardCodes = new ArrayList<>();
         
         File drawFile = new File(drawFilePath);
         if (!drawFile.exists()) {
-            return cardCodes; // Empty pile if file doesn't exist
+            return cardCodes;
         }
         
         try (BufferedReader reader = new BufferedReader(new FileReader(drawFilePath))) {
@@ -187,7 +178,7 @@ public class GameFileManager {
         return cardCodes;
     }
     
-    // Save discard pile to discard.txt
+
     public static void saveDiscardPile(String gameName, List<String> cardCodes) throws IOException {
         String discardFilePath = gameName + File.separator + DISCARD_FILE;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(discardFilePath))) {
@@ -198,14 +189,13 @@ public class GameFileManager {
         }
     }
     
-    // Load discard pile from discard.txt
     public static List<String> loadDiscardPile(String gameName) throws IOException {
         String discardFilePath = gameName + File.separator + DISCARD_FILE;
         List<String> cardCodes = new ArrayList<>();
         
         File discardFile = new File(discardFilePath);
         if (!discardFile.exists()) {
-            return cardCodes; // Empty pile if file doesn't exist
+            return cardCodes;
         }
         
         try (BufferedReader reader = new BufferedReader(new FileReader(discardFilePath))) {
@@ -221,7 +211,6 @@ public class GameFileManager {
         return cardCodes;
     }
     
-    // Save player's drawn state
     public static void savePlayerDrawnState(String gameName, String username, boolean hasDrawn) throws IOException {
         String drawnStateFilePath = gameName + File.separator + username + DRAWN_STATE_SUFFIX;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(drawnStateFilePath))) {
@@ -229,13 +218,13 @@ public class GameFileManager {
         }
     }
     
-    // Load player's drawn state
+
     public static boolean loadPlayerDrawnState(String gameName, String username) throws IOException {
         String drawnStateFilePath = gameName + File.separator + username + DRAWN_STATE_SUFFIX;
         File drawnStateFile = new File(drawnStateFilePath);
         
         if (!drawnStateFile.exists()) {
-            return false; // Default to not having drawn if file doesn't exist
+            return false;
         }
         
         try (BufferedReader reader = new BufferedReader(new FileReader(drawnStateFilePath))) {
@@ -245,6 +234,6 @@ public class GameFileManager {
             }
         }
         
-        return false; // Default to not having drawn if file is empty or malformed
+        return false;
     }
 }

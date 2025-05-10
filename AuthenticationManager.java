@@ -7,23 +7,21 @@ import java.util.Base64;
 import java.util.Scanner;
 
 public class AuthenticationManager {
-    // Hash a password using SHA-256 and encode in Base64
     public static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA3-256");
             byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
+        } catch (NoSuchAlgorithmException e) { //
+            throw new RuntimeException("Error hashing password", e); //
         }
     }
     
-    // Authenticate an admin
     public static boolean authenticateAdmin(String gameName, String password) {
         try {
             String storedHash = GameFileManager.getHashedPassword(gameName, "admin");
             if (storedHash == null) {
-                return false; // Admin not found
+                return false;
             }
             
             String inputHash = hashPassword(password);
@@ -34,12 +32,12 @@ public class AuthenticationManager {
         }
     }
     
-    // Authenticate a user
+
     public static boolean authenticateUser(String gameName, String username, String password) {
         try {
             String storedHash = GameFileManager.getHashedPassword(gameName, username);
             if (storedHash == null) {
-                return false; // User not found
+                return false;
             }
             
             String inputHash = hashPassword(password);
@@ -50,7 +48,9 @@ public class AuthenticationManager {
         }
     }
     
-    // Read a password securely (hiding input)
+    /*
+     * Make a method to read from the console without echoing the password.
+     */
     public static String readPassword() {
         Console console = System.console();
         if (console != null) {
@@ -69,21 +69,18 @@ public class AuthenticationManager {
         }
     }
     
-    // Create a game and set up admin
     public static boolean initializeGame(String gameName) {
-        // Check if game already exists
+
         if (GameFileManager.gameExists(gameName)) {
             System.err.println("Game '" + gameName + "' already exists.");
             return false;
         }
         
-        // Create game directory
         if (!GameFileManager.createGameDirectory(gameName)) {
             System.err.println("Failed to create game directory.");
             return false;
         }
-        
-        // Set admin password
+
         System.out.println("Set an admin password for game '" + gameName + "':");
         String password = readPassword();
         
@@ -98,21 +95,18 @@ public class AuthenticationManager {
         }
     }
     
-    // Add a new user to the game
     public static boolean addUser(String gameName, String username) {
-        // Validate game exists
+
         if (!GameFileManager.gameExists(gameName)) {
             System.err.println("Game '" + gameName + "' does not exist.");
             return false;
         }
         
-        // Check if username is "admin" which is reserved
         if (username.equalsIgnoreCase("admin")) {
             System.err.println("Username 'admin' is reserved and cannot be used as a player name.");
             return false;
         }
         
-        // Authenticate as admin
         System.out.println("Enter admin password for game '" + gameName + "':");
         String adminPassword = readPassword();
         if (!authenticateAdmin(gameName, adminPassword)) {
@@ -120,7 +114,6 @@ public class AuthenticationManager {
             return false;
         }
         
-        // Set user password
         System.out.println("Set a password for user '" + username + "':");
         String userPassword = readPassword();
         
@@ -135,15 +128,13 @@ public class AuthenticationManager {
         }
     }
     
-    // Remove a user from the game
     public static boolean removeUser(String gameName, String username) {
-        // Validate game exists
+
         if (!GameFileManager.gameExists(gameName)) {
             System.err.println("Game '" + gameName + "' does not exist.");
             return false;
         }
         
-        // Authenticate as admin
         System.out.println("Enter admin password for game '" + gameName + "':");
         String adminPassword = readPassword();
         if (!authenticateAdmin(gameName, adminPassword)) {

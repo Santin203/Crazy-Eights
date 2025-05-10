@@ -1,14 +1,18 @@
+
+/*
+ * Prompt: Create a class named Card that represents a playing card in a standard deck of cards.
+ * It should use this format: "rank" + "suit", where rank is a number from 2 to 10 or a letter (A, J, Q, K) and suit is one of the following:
+ * "H" for hearts, "D" for diamonds, "C" for clubs, and "S" for spades.
+ */
 public class Card {
     private final String rank;
     private final String suit;
     
-    // Constants for card suits
     public static final String HEARTS = "H";
     public static final String DIAMONDS = "D";
     public static final String CLUBS = "C";
     public static final String SPADES = "S";
     
-    // Constants for card ranks
     public static final String ACE = "A";
     public static final String JACK = "J";
     public static final String QUEEN = "Q";
@@ -27,12 +31,10 @@ public class Card {
         return suit;
     }
     
-    // Returns the 2-character representation of the card (e.g., "4C" for four of clubs)
     public String getCode() {
         return rank + suit;
     }
     
-    // Creates a Card object from a 2 or 3-character code (e.g., "4C" for four of clubs, "10H" for ten of hearts)
     public static Card fromCode(String code) {
         if (code.length() < 2 || code.length() > 3) {
             throw new IllegalArgumentException("Card code must be 2 or 3 characters");
@@ -51,20 +53,28 @@ public class Card {
         
         return new Card(rank, suit);
     }
-    
-    // Calculate the point value of the card according to Crazy Eights rules
+
+    /*
+     * Prompt: Create a method that returns the point value of the card based on the following rules:
+     * - 8 is worth 50 points
+     * - 10, J, Q, K are worth 10 points each
+     * - A is worth 1 point
+     */
     public int getPointValue() {
         switch (rank) {
-            case ACE:
-            case JACK:
-            case QUEEN:
+            case "8":
+                return 50;
             case KING:
+            case QUEEN:
+            case JACK:
+            case "10":
                 return 10;
+            case ACE:
+                return 1;
             default:
                 try {
                     return Integer.parseInt(rank);
                 } catch (NumberFormatException e) {
-                    // This should not happen with valid cards
                     return 0;
                 }
         }

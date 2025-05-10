@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ * Prompt: Based on the Card class, create a basic Deck class
+ */
 public class Deck {
     private List<Card> cards;
     
@@ -10,8 +13,7 @@ public class Deck {
     
     // Standard suits for a deck of cards
     private static final String[] SUITS = {Card.HEARTS, Card.DIAMONDS, Card.CLUBS, Card.SPADES};
-    
-    // Create a standard deck of 52 cards
+
     public Deck() {
         cards = new ArrayList<>();
         initializeDeck();
