@@ -404,7 +404,7 @@ public class CommandHandler {
             
             System.out.println("Turn passed.");
             
-            if (game.isGameOver()) {
+            if (game.checkGameOver()) {
                 Player winner = game.getWinner();
                 System.out.println("Game over! Winner: " + winner.getName());
             } else {

@@ -130,7 +130,6 @@ public class Game {
         if (Rules.canPlayerMakeValidMove(currentPlayer, topDiscard)) {
             return false; 
         }
-        
 
         nextTurn();
         return true;
@@ -141,7 +140,7 @@ public class Game {
         currentPlayerIndex = Rules.getNextPlayerIndex(currentPlayerIndex, players.size(), reverseDirection);
     }
     
-    private boolean checkGameOver() {
+    public boolean checkGameOver() {
         Player currentPlayer = getCurrentPlayer();
         
         if (Rules.isGameOver(currentPlayer, drawPile)) {
